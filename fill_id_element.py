@@ -47,9 +47,10 @@ for elem in elem_prop_value:
 
 df = pd.DataFrame(df_prop_value, columns=table_col)
 df = df.sort_values(by=['zone', 'name', 'gr_name', 'gen_el_gr'])
+df = df[df.layer.str.contains('мебель')]
 
 gb = df.groupby(['zone', 'name', 'gr_name'])[['id']].count()
-print(gb)
+
 gb['id'] = [str(i) for i in range(1, len(gb['id']) + 1)]
 
 df_out = pd.merge(df, gb, on=['zone', 'name', 'gr_name'])
