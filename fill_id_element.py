@@ -44,15 +44,16 @@ for elem in elem_prop_value:
         elem[index + 1] = (elem[index + 1], p_v.propertyValue)
         elem_buffer.append(p_v.propertyValue.value)
     df_prop_value.append(elem_buffer)
-
+for val in df_prop_value:
+    print(val)
 df = pd.DataFrame(df_prop_value, columns=table_col)
 df = df.sort_values(by=['zone', 'name', 'gr_name', 'gen_el_gr'])
 df = df[df.layer.str.contains('мебель')]
-
+print(df)
 gb = df.groupby(['zone', 'name', 'gr_name'])[['id']].count()
 
 gb['id'] = [str(i) for i in range(1, len(gb['id']) + 1)]
-
+print(gb)
 df_out = pd.merge(df, gb, on=['zone', 'name', 'gr_name'])
 df_out['id_x'] = df_out['id_y']
 df_out = df_out.rename(columns={'id_x': 'id'})
